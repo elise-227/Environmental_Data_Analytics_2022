@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1: Introduction"
-author: "Student Name"
+author: "Elise Boos"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -22,21 +22,22 @@ The completed exercise is due on <>.
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: 
+> Answer: I was introduced to R in undergrad, but it was very basic and more just learning the language and running code already given to me but inputting my own variables. My first semester of the MEM program I took Poulsen's stats class where I learned how to run statistical analysis and basic functions in R but also during that semester I started working at the lemur center and self-taught myself a lot more and ended up writing my own codes to do data analysis for the lemur center. 
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: 
+> Answer: Scanning through the syllabus, I'm pretty confident with ggplot and know basics of tidyverse. Also from the stats course I know how to run linear models, ANOVA, etc. I feel honestly like I have a good basis and understanding of R but a lot of it I taught myself, so I am hoping to see easier ways to do things and become more proficient overall. 
 
 3. Are there any components of the course about which you feel apprehensive?
 
-> Answer: 
+> Answer: Eager to learn a little bit about Python and using R for spatial analysis, but nothing I'm apprehensive about, just excited! 
 
 
 ## 2) GitHub
 
-Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository  and that you have updated your course README file. 
+Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository and that you have updated your course README file. 
 
-> Answer: 
+> Answer: https://github.com/elise-227/Environmental_Data_Analytics_2022
+
 
 
