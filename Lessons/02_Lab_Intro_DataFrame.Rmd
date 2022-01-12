@@ -114,6 +114,6 @@ head(df) #show the first 6 rows of df
 df[,1]
 
 #you could also use this notation to delete columns
-df <- df[,-2]
+df <- as.data.frame(df[,-2])
 df
 ```
