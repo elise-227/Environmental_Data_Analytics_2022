@@ -117,3 +117,4 @@ df[,1]
 df <- as.data.frame(df[,-2])
 df
 ```
+
