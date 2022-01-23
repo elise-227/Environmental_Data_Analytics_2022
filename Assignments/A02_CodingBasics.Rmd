@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2: Coding Basics"
-author: "Student Name"
+author: "Elise Boos"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -32,11 +32,22 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 
 ```{r}
 #1. 
+#use sequence function to generate sequence. 1 being start, 100 being end, 
+#and 4 being how much to increase by. 
+sequence <- seq(1,100,4)
+sequence
 
 #2. 
+#use summary function to find mean and median of the sequence. 
+summary(sequence)
 
 #3. 
-
+#test out logic to see if greater than or less than
+mean(sequence) > median(sequence)
+mean(sequence) < median(sequence)
+#both false try equal to
+mean(sequence) == median(sequence)
+#they are equal
 ```
 
 ## Basics Day 2
@@ -50,21 +61,38 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 8. Label the columns of your data frame with informative titles.
 
 ```{r}
+#create vectors of student names, scores and pass or not
+names <- c("Joan", "Amy", "Casey", "Beth")
+score <- c(40, 70, 80, 90)
+pass <- c(FALSE, TRUE, TRUE, TRUE)
 
+#combine vectors into dataframe
+test_results <- cbind(names, score, pass)
+test_results
+#rename columns 
+colnames(test_results) <- c("Name", "Test_Score", "Pass")
+test_results
 ```
 
 9. QUESTION: How is this data frame different from a matrix?
 
-> Answer: 
+> Answer: in a matrix the data has to be the same mode or type.
 
 10. Create a function with an if/else statement. Your function should determine whether a test score is a passing grade of 50 or above (TRUE or FALSE). You will need to choose either the `if` and `else` statements or the `ifelse` statement. Hint: Use `print`, not `return`. The name of your function should be informative.
 
 11. Apply your function to the vector with test scores that you created in number 5. 
 
 ```{r}
+passing_grade <- function(x){
+  ifelse(x >= 50, TRUE, FALSE)
+}
 
+#test function on vector of scores
+passing_grade(score)
+#test on individual score
+passing_grade(60)
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer: 
+> Answer: ifelse worked because its a function where the input is either TRUE or FALSE based on the logical expression which is what we are trying to determine - our logical expression being is the exam grade greater or equal to 50. You might be able to get 'if' 'else' to work but it would be more unecessary lines of code when ifelse works and makes more intuitive sense. 
