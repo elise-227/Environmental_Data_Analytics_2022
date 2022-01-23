@@ -78,7 +78,7 @@ library(tidyverse)
 
 Question: What happens in the console when you load a package?
 
-> Answer: 
+> Answer: output shows on console. Umbrella package shows which packages come along with
 
 ### Import your datasets
 
@@ -100,12 +100,13 @@ Commons functions to import datasets and store as data frames are *read.table()*
 #read.csv("/Users/lmm89/OneDrive/Duke_University/7_Spring2021/ENV872_EDA/GitRepo_EDA_S2021/Environmental_Data_Analytics_2021/Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
 # Relative file path (friendly for users regardless of machine)
-USGS.flow.data <- read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")   
+USGS.flow.data <- read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv")   
 #For knitting the .Rmd file you need to added an extra "." to the relative path
 # R Markdown documents are compiled in separate R sessions to enhance reproducibility, so you current R console has nothing to do with the compilation of the R Markdown documents.
 
 # What happens if we don't assign a name to our imported dataset?
 #read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")
+#dot refers to working directory 
 
 # Another option is to choose with your browser
 # read.csv(file.choose())
@@ -119,7 +120,7 @@ USGS.flow.data <- read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 ## EXPLORE YOUR DATASET
 
 Take a moment to read through the README file associated with the USGS dataset on discharge at the Eno River. Where can you find this file? How does the placement and information found in this file relate to the best practices for reproducible data analysis?
-> ANSWER: 
+> ANSWER: in metadata section of data folder. 
 
 ```{r exploredata}
 View(USGS.flow.data)
@@ -149,12 +150,12 @@ class(USGS.flow.data$datetime)
 class(USGS.flow.data$discharge.mean)
 class(USGS.flow.data$gage.height.mean)
 
-summary(USGS.flow.data)  #could point to column only with $
+summary(USGS.flow.data$discharge.max)  #could point to column only with $
 
 ```
 
 What happened to blank cells in the spreadsheet when they were imported into R?
-> Answer: 
+> Answer: NAs
 
 ## Adjusting Datasets
 
@@ -171,6 +172,7 @@ Question: What types of research questions might make it favorable to remove NAs
 > Answer: 
 
 ```{r removeNA}
+#store without NAs
 USGS.flow.data.complete <- na.omit(USGS.flow.data)
 dim(USGS.flow.data)
 dim(USGS.flow.data.complete)
@@ -203,6 +205,7 @@ help(as.Date)
 
 
 USGS.flow.data$datetime <- as.Date(USGS.flow.data$datetime, format = "%m/%d/%y") 
+USGS.flow.data$datetime
 ```
 
 Note that for every date prior to 1969, R has assigned the date in the 2000s rather than the 1900s. This can be fixed with an `ifelse` statement inside a function. Run through the code below and write what is happening in the comment above each line.
@@ -230,7 +233,7 @@ We just edited our raw dataset into a processed form. We may want to return to t
 
 ```{r savingdata}
 # Note the added "." again for .Rmd 
-write.csv(USGS.flow.data, file = "../Data/Processed/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
+write.csv(USGS.flow.data, file = "./Data/Processed/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
 
 ```
 
