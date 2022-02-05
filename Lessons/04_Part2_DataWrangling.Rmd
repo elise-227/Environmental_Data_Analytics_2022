@@ -92,7 +92,8 @@ We will work with the new functions from `tidyr`. For gather we will use `pivot_
 NTL.nutrient.data.PeterPaul.gathered <- pivot_longer(NTL.nutrient.data.PeterPaul.subset,tn_ug:po4, names_to = "nutrient", values_to = "concentration")
 
 NTL.nutrient.data.PeterPaul.gathered <- subset(NTL.nutrient.data.PeterPaul.gathered, !is.na(concentration))
-count(NTL.nutrient.data.PeterPaul.gathered, nutrient)
+count(NTL.nutrient.data.PeterPaul.gathered, "nutrient")
+####comma didn't work? use quotes or $
 
 write.csv(NTL.nutrient.data.PeterPaul.gathered, row.names = FALSE, 
           file = "./Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaulGathered_Processed.csv")
@@ -101,6 +102,7 @@ write.csv(NTL.nutrient.data.PeterPaul.gathered, row.names = FALSE,
 #NTL.nutrient.data.PeterPaul.spread <- spread(NTL.nutrient.data.PeterPaul.gathered, nutrient, concentration)
 
 # Spread nutrient data into separate columns using pivot_wider
+#opposite transformation
 NTL.nutrient.data.PeterPaul.spread2 <- pivot_wider(NTL.nutrient.data.PeterPaul.gathered, names_from = nutrient, values_from = concentration)
 
 # Split components of cells into multiple columns
