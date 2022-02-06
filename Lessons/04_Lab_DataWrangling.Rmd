@@ -123,4 +123,5 @@ irradiance <- pivot_longer(NTL.phys.data,irradianceWater:irradianceDeck, names_t
 #Exercise 6: spread temperatureC into more than one column based on the depth
 tempbydepth <- pivot_wider(NTL.phys.data, names_from = depth, values_from = temperature_C)
 ```
+```
 
