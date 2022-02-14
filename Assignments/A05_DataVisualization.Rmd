@@ -154,7 +154,7 @@ scale_x_date(date_breaks = "6 months", date_labels = "%b-%Y")
 #second graph using a facet to separate 
 ggplot(subset(NEON, functionalGroup = "Needles"), aes(x = collectDate, y = dryMass)) +
 geom_point(color = "dark green", alpha = 0.5) +
-facet_wrap(vars(nlcdClass), nrow = 3) + 
+facet_wrap(vars(nlcdClass), nrow = 1) + 
 ylab("Dry Mass")+
 xlab("Date")+
 scale_x_date(date_breaks = "6 months", date_labels = "%b-%Y")
