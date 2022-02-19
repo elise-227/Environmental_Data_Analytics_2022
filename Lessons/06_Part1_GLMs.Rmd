@@ -119,6 +119,7 @@ Given the distribution of irradiance values, we don't have a linear relationship
 ```{r, fig.height = 3, fig.width = 4}
 PeterPaul.chem.nutrients <- filter(PeterPaul.chem.nutrients, 
                                    irradianceWater != 0 & irradianceWater < 5000)
+#to take log need to take out 0s and also remove outlier 
 irradiance.regression2 <- lm(data = PeterPaul.chem.nutrients, log(irradianceWater) ~ depth)
 summary(irradiance.regression2)
 
@@ -170,8 +171,10 @@ par(mfrow = c(1,1))
 We can also make exploratory plots of several continuous data points to determine possible relationships, as well as covariance among explanatory variables. 
 
 ```{r, fig.height = 3, fig.width = 4}
-#install.packages("corrplot")
+install.packages("corrplot")
 library(corrplot)
+#correlation matrix
+#just columns of interest
 PeterPaulnutrients <- 
   PeterPaul.chem.nutrients %>%
   select(tn_ug:po4) %>%
