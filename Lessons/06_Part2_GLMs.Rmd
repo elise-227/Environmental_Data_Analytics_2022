@@ -90,11 +90,13 @@ plot(Litter.Totals.anova2)
 
 # Post-hoc test
 # TukeyHSD() computes Tukey Honest Significant Differences
+# difference between means
 TukeyHSD(Litter.Totals.anova)
 
 # Extract groupings for pairwise relationships
 Litter.Totals.groups <- HSD.test(Litter.Totals.anova, "plotID", group = TRUE)
 Litter.Totals.groups
+#same letter same mean 
 
 # Graph the results
 Litter.Totals.plot <- ggplot(Litter.Totals, aes(x = plotID, y = dryMass)) +

@@ -21,6 +21,7 @@ The expression function can be used when you want to add mathematical symbols an
 If plotting one variable then can do in main ggplot, but if more then do in aesthetics of each geom
 
 ```{r}
+library(ggplot2)
 Plot_text <-
 ggplot(data=data.frame(x=0,y=0))+
   geom_point(aes(x=x,y=y)) +
