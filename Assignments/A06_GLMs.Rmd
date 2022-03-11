@@ -1,6 +1,6 @@
 ---
 title: "Assignment 6: GLMs (Linear Regressios, ANOVA, & t-tests)"
-author: "Student Name"
+author: "Elise Boos"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -35,7 +35,8 @@ require(agricolae)
 library(lubridate)
 library(viridis)
 #load data
-NTL <- read.csv("./Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv", stringsAsFactors = TRUE)
+NTL <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv", 
+                stringsAsFactors = TRUE)
 #change sampledate column to date column
 NTL$sampledate <- as.Date(NTL$sampledate, format = "%m/%d/%y")
 #check
@@ -43,9 +44,9 @@ class(NTL$sampledate)
 
 #2
 #build theme
-mytheme <- theme_bw(base_size = 14) +
+mytheme <- theme_bw(base_size = 12) +
   theme(axis.text = element_text(color = "black"), 
-        legend.position = "top")
+        legend.position = "right")
 #set theme
 theme_set(mytheme)
 ```
@@ -102,7 +103,7 @@ summary(NTL_lm)
 
 8. Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth. 
 
-> Answer:
+> Answer: Temperature is significantly different with changes in depth. 73.87% of the variability in temperature is explained by changes in depth. This finding is based off 9726 degrees of freedom and has a significant p values < 2.2e-16. With 1 m change in depth, temperature is expected to decrease by 1.95 degrees celcius. 
 
 
 ---
@@ -117,17 +118,19 @@ Let's tackle a similar question from a different approach. Here, we want to expl
 
 ```{r temperature.model}
 #9
+AIC <- lm(data = NTL_edit, temperature_C ~ year4 + daynum + depth)
 
+#Choose a model by AIC in a Stepwise Algorithm
+step(AIC)
 
-
-#10
-
-
+#10 leaving all the variables in is recommeneded by AIC
+NTL_lm2 <- lm(data = NTL_edit, temperature_C ~ year4 + daynum + depth)
+summary(NTL_lm2)
 ```
 
 11. What is the final set of explanatory variables that the AIC method suggests we use to predict temperature in our multiple regression? How much of the observed variance does this model explain? Is this an improvement over the model using only depth as the explanatory variable?
 
-> Answer: 
+> Answer: The stepwise AIC suggests leaving all the explanatory variables in the model so a full model was used. This model explains 74.12% of the variation in temperature. This is a slight improvement from only using depth as an explanatory variable. 
 
 
 
@@ -138,13 +141,16 @@ Let's tackle a similar question from a different approach. Here, we want to expl
 
 ```{r anova.model}
 #12
+NTL.anova <- aov(data = NTL_edit, temperature_C ~ lakename)
+summary(NTL.anova)
 
-
+NTL.lm3 <- lm(data = NTL_edit, temperature_C ~ lakename)
+summary(NTL.lm3)
 ```
 
 13. Is there a significant difference in mean temperature among the lakes? Report your findings. 
 
-> Answer: 
+> Answer: There is a significant difference in mean temperature among the lakes. These findings were determined by 9719 degrees of freedom and had a significant p values of 2.2e-16. The model is on the weaker end and only accounts for 3.95% variation in mean temperature so more variables than lakename explain differences in temperature. 
 
 
 
@@ -152,7 +158,12 @@ Let's tackle a similar question from a different approach. Here, we want to expl
 
 ```{r scatterplot.2}
 #14.
-
+ggplot(data = NTL_edit, aes(x = depth, y = temperature_C, color = lakename))+
+  geom_point(alpha = 0.5)+
+  geom_smooth(method = lm, se = FALSE)+
+  ylim(0, 35)+
+  ylab("Temperature Celcius")+
+  xlab("Depth (m)")
 
 ```
 
@@ -160,18 +171,20 @@ Let's tackle a similar question from a different approach. Here, we want to expl
 
 ```{r tukey.test}
 #15
+TukeyHSD(NTL.anova)
 
-
+NTL.groups <- HSD.test(NTL.anova, "lakename", group = TRUE)
+NTL.groups
 ```
 
 16.From the findings above, which lakes have the same mean temperature, statistically speaking, as Peter Lake? Does any lake have a mean temperature that is statistically distinct from all the other lakes?
 
->Answer:
+>Answer: The lakes with the same statisical mean as Peter Lake are Paul lake and Ward Lake.
 
  
 
 17. If we were just looking at Peter Lake and Paul Lake. What's another test we might explore to see whether they have distinct mean temperatures? 
 
->Answer: 
+>Answer: We could filter the data set to just be those two lake names and then run a one way anova to see if lakename is significant. If lakename is not significant then they do not have significantly distinct mean temperatures.  
 
 
