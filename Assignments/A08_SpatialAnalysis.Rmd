@@ -42,6 +42,7 @@ require(tidyverse)
 require(sf)
 require(leaflet)
 require(mapview)
+#make mapview work on a mac
 mapviewOptions(fgb = FALSE)
 
 ```
@@ -181,9 +182,6 @@ Now we can examine where the flooding appears most acute by visualizing gage hei
 mapview(NE_sf, col.regions = "pink")+
 mapview(gage_sf_join, 
         zcol = 'gage_ht')
-
-
-
 
 ```
 
