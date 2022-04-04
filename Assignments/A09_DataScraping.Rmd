@@ -50,6 +50,7 @@ Indicate this website as the as the URL to be scraped. (In other words, read the
 
 ```{r set.the.scraping.website}
 #2
+#set webpage variable reading in as url
 webpage <- read_html('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=2020')
 webpage
 ```
@@ -70,6 +71,7 @@ In the code chunk below scrape these values, assigning them to three separate va
 
 ```{r scrape.the.data}
 #3
+#scrape data
 water.system.name <- webpage %>% 
   html_nodes("div+ table tr:nth-child(1) td:nth-child(2)") %>% 
   html_text()
@@ -103,6 +105,7 @@ max.withdrawals.mgd
 
 ```{r create.a.dataframe.from.scraped.data}
 #4
+#create dataframe from scaped data
 withdrawals <- data.frame("Month" = month(c(1,5,9,2,6,10,3,7,11,4,8,12)),
                      "Year" = rep(2020,12),               
                      "Water.System" = water.system.name,
@@ -115,6 +118,7 @@ withdrawals_2020 <- withdrawals %>%
 withdrawals_2020
 
 #5
+#plot max withdrawals by month
 ggplot(withdrawals_2020,aes(x=Date,y=Max.Withdrawals.mgd)) + 
   geom_point() +
   geom_line() +
@@ -130,9 +134,11 @@ ggplot(withdrawals_2020,aes(x=Date,y=Max.Withdrawals.mgd)) +
 
 ```{r construct.a.scraping.function}
 #6.
+#create scrape it function
 scrape.it <- function(the_year, pswid_year){
   #Get the proper url
-  the_url <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pswid_year,'&year=',the_year))
+  the_url <- read_html(
+    paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pswid_year,'&year=',the_year))
 
   #Fetch the website
 water.system.name <- the_url %>% 
@@ -167,9 +173,11 @@ max.withdrawals.mgd <- the_url %>%
 
 ```{r fetch.and.plot.Durham.2015.data}
 #7
+#use function for durham and 2015
 durham_2015 <- scrape.it(2015, '03-32-010')
 durham_2015
 
+#plot max withdrawals by month
 ggplot(durham_2015,aes(x=Date,y=Max.Withdrawals.mgd)) + 
   geom_point() +
   geom_line() +
@@ -184,12 +192,14 @@ ggplot(durham_2015,aes(x=Date,y=Max.Withdrawals.mgd)) +
 
 ```{r fetch.and.plot.Durham.Asheville.2015.data}
 #8
-#7
+#asheville for 2015
 asheville_2015 <- scrape.it(2015, '01-11-010')
 asheville_2015
 
+#bind durham and asheville dataframes
 a_d_2015 <- rbind(durham_2015, asheville_2015)
 
+#plot coloring by water system
 ggplot(a_d_2015,aes(x=Date,y=Max.Withdrawals.mgd)) + 
   geom_point() +
   geom_line(aes(color = Water.System)) +
@@ -204,9 +214,11 @@ ggplot(a_d_2015,aes(x=Date,y=Max.Withdrawals.mgd)) +
 
 ```{r}
 #9
+#use lapply to run for 2010-2019
 years <- seq(2010,2019)
 asheville_2010_2019 <- lapply(X = years, FUN = scrape.it, pswid_year = '01-11-010') %>% bind_rows()
 
+#plot 
 ggplot(asheville_2010_2019,aes(x=Date,y=Max.Withdrawals.mgd)) + 
   geom_point() +
   geom_line() +
